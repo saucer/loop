@@ -8,6 +8,11 @@ namespace saucer::modules
 
     loop::~loop() = default;
 
+    bool loop::on_quit() // NOLINT(*-static)
+    {
+        return false;
+    }
+
     void loop::run()
     {
         m_parent->run([](auto...) -> coco::stray { return {}; });
@@ -21,10 +26,5 @@ namespace saucer::modules
     void loop::quit()
     {
         m_parent->quit();
-    }
-
-    bool loop::on_quit() // NOLINT(*-static)
-    {
-        return false;
     }
 } // namespace saucer::modules

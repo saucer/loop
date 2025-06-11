@@ -19,6 +19,12 @@ namespace saucer::modules
 
     loop::~loop() = default;
 
+    bool loop::on_quit()
+    {
+        quit();
+        return true;
+    }
+
     void loop::run()
     {
         // https://github.com/GNOME/glib/blob/ce5e11aef4be46594941662a521c7f5e026cfce9/gio/gapplication.c#L2591
@@ -66,11 +72,5 @@ namespace saucer::modules
         }
 
         m_impl->should_quit = true;
-    }
-
-    bool loop::on_quit()
-    {
-        quit();
-        return true;
     }
 } // namespace saucer::modules

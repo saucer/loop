@@ -6,6 +6,7 @@ namespace saucer::modules
 {
     class loop
     {
+        friend class traits<application>;
         struct impl;
 
       private:
@@ -18,6 +19,9 @@ namespace saucer::modules
       public:
         ~loop();
 
+      protected:
+        bool on_quit();
+
       public:
         [[nodiscard]] saucer::application *application();
 
@@ -27,6 +31,5 @@ namespace saucer::modules
 
       public:
         void quit();
-        bool on_quit();
     };
 } // namespace saucer::modules
