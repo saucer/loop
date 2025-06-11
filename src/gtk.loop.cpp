@@ -17,6 +17,8 @@ namespace saucer::modules
         run();
     }
 
+    loop::~loop() = default;
+
     void loop::run()
     {
         // https://github.com/GNOME/glib/blob/ce5e11aef4be46594941662a521c7f5e026cfce9/gio/gapplication.c#L2591

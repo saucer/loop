@@ -6,6 +6,8 @@ namespace saucer::modules
 {
     loop::loop(saucer::application *parent) : m_impl(std::make_unique<impl>()), m_parent(parent) {}
 
+    loop::~loop() = default;
+
     void loop::run()
     {
         m_parent->run([](auto...) -> coco::stray { return {}; });

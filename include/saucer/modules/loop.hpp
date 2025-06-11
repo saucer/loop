@@ -16,6 +16,12 @@ namespace saucer::modules
         loop(saucer::application *parent);
 
       public:
+        ~loop();
+
+      public:
+        [[nodiscard]] saucer::application *application();
+
+      public:
         void run();
         void iteration();
 
