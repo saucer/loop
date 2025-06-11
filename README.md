@@ -38,7 +38,7 @@ target_link_libraries(<target> saucer::loop)
 ## 📃 Usage
 
 > [!WARNING]
-> This module may replace the default application loop. Therefore, it is recommended to not use or call `application::quit` / `application::finish()`!
+> This module may replace the default application loop. Therefore, it is recommended to not use or call `application::finish()`!
 
 ```cpp
 auto  app    = /*...*/;
