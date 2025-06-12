@@ -6,7 +6,7 @@ namespace saucer::modules
 {
     class loop
     {
-        friend class traits<application>;
+        friend class traits<saucer::application>;
         struct impl;
 
       private:
