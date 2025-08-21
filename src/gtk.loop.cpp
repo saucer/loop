@@ -1,7 +1,7 @@
 #include "gtk.loop.impl.hpp"
 
-#include "gtk.utils.hpp"
-#include "gtk.app.impl.hpp"
+#include <saucer/gtk.utils.hpp>
+#include <saucer/gtk.app.impl.hpp>
 
 namespace saucer::modules
 {
