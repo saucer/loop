@@ -1,10 +1,10 @@
 #pragma once
 
-#include "loop.hpp"
+#include "loop.impl.hpp"
 
 namespace saucer::modules
 {
-    struct loop::impl
+    struct loop::impl::native
     {
     };
 } // namespace saucer::modules

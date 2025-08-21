@@ -1,52 +1,62 @@
 #include "gtk.loop.impl.hpp"
 
+#include "gtk.utils.hpp"
 #include "gtk.app.impl.hpp"
 
 namespace saucer::modules
 {
-    loop::loop(saucer::application *parent) : m_impl(std::make_unique<impl>()), m_parent(parent)
-    {
-        auto *const impl = parent->native<false>();
+    using impl = loop::impl;
 
-        auto callback = [](GtkApplication *, loop *self)
+    impl::impl() = default;
+
+    void impl::init_platform()
+    {
+        platform = std::make_unique<native>();
+
+        platform->on_quit = parent->on<saucer::application::event::quit>(
+            [this]()
+            {
+                quit();
+                return saucer::policy::block;
+            });
+
+        auto callback = [](GtkApplication *, impl *self)
         {
             self->quit();
         };
-        g_signal_connect(impl->application.get(), "activate", G_CALLBACK(+callback), this);
+        platform->on_activate = utils::connect(parent->native<false>()->platform->application.get(), "activate", +callback, this);
 
         run();
     }
 
-    loop::~loop() = default;
-
-    bool loop::on_quit()
+    impl::~impl()
     {
-        quit();
-        return true;
+        g_signal_handler_disconnect(parent->native<false>()->platform->application.get(), platform->on_activate);
+        parent->off(saucer::application::event::quit, platform->on_quit);
     }
 
-    void loop::run()
+    void impl::run() const
     {
         // https://github.com/GNOME/glib/blob/ce5e11aef4be46594941662a521c7f5e026cfce9/gio/gapplication.c#L2591
 
-        m_impl->should_quit = false;
+        platform->should_quit = false;
 
-        auto *const impl    = m_parent->native<false>();
-        auto *const context = g_main_context_default();
+        auto *const application = G_APPLICATION(parent->native<false>()->platform->application.get());
+        auto *const context     = g_main_context_default();
 
         if (!g_main_context_acquire(context))
         {
             return;
         }
 
-        if (!m_impl->initialized) [[unlikely]]
+        if (!platform->initialized) [[unlikely]]
         {
-            g_application_register(G_APPLICATION(impl->application.get()), nullptr, nullptr);
-            g_application_activate(G_APPLICATION(impl->application.get()));
-            m_impl->initialized = true;
+            g_application_register(application, nullptr, nullptr);
+            g_application_activate(application);
+            platform->initialized = true;
         }
 
-        while (!m_impl->should_quit)
+        while (!platform->should_quit)
         {
             g_main_context_iteration(context, true);
         }
@@ -54,23 +64,18 @@ namespace saucer::modules
         g_main_context_release(context);
     }
 
-    void loop::iteration()
+    void impl::iteration() const
     {
-        if (m_impl->should_quit)
+        if (platform->should_quit)
         {
             return;
         }
 
-        m_parent->native<false>()->iteration();
+        parent->native<false>()->platform->iteration();
     }
 
-    void loop::quit()
+    void impl::quit() const
     {
-        if (!m_parent->thread_safe())
-        {
-            return m_parent->dispatch([this] { return quit(); });
-        }
-
-        m_impl->should_quit = true;
+        parent->invoke([this] { platform->should_quit = true; });
     }
 } // namespace saucer::modules

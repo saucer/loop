@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(saucer-loop LANGUAGES CXX VERSION 1.0.1)
+project(saucer-loop LANGUAGES CXX VERSION 2.0.0)
 
 # --------------------------------------------------------------------------------------------------------
 # Setup Library
@@ -59,6 +59,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 if (saucer_backend MATCHES "^Qt.$")
   file(GLOB qt_sources
     "src/qt.*cpp"
+    "src/noop.*cpp"
   )
 
   target_sources(${PROJECT_NAME} PRIVATE ${qt_sources})
@@ -69,6 +70,7 @@ if (saucer_backend STREQUAL "WebKit")
   
   file(GLOB cocoa_sources
     "src/cocoa.*mm"
+    "src/noop.*cpp"
   )
 
   target_sources(${PROJECT_NAME} PRIVATE ${cocoa_sources})
@@ -85,6 +87,7 @@ endif()
 if (saucer_backend STREQUAL "WebView2")
   file(GLOB win_sources
     "src/win32.*cpp"
+    "src/noop.*cpp"
   )
 
   target_sources(${PROJECT_NAME} PRIVATE ${win_sources})

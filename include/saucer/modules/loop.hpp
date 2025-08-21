@@ -4,23 +4,18 @@
 
 namespace saucer::modules
 {
-    class loop
+    struct loop
     {
-        friend class traits<saucer::application>;
         struct impl;
 
       private:
         std::unique_ptr<impl> m_impl;
-        saucer::application *m_parent;
 
       public:
-        loop(saucer::application *parent);
+        loop(saucer::application &);
 
       public:
         ~loop();
-
-      protected:
-        bool on_quit();
 
       public:
         [[nodiscard]] saucer::application *application();
