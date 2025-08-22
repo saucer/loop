@@ -4,8 +4,8 @@
 
 namespace saucer::modules
 {
-    void loop::impl::iteration()
+    void loop::impl::iteration() const
     {
-        m_parent->native<false>()->iteration();
+        parent->native<false>()->platform->iteration();
     }
 } // namespace saucer::modules
