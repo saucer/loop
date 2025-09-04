@@ -16,7 +16,7 @@
   ```cmake
   CPMFindPackage(
     NAME           saucer-loop
-    VERSION        1.0.0
+    VERSION        2.0.0
     GIT_REPOSITORY "https://github.com/saucer/loop"
   )
   ```
@@ -25,7 +25,7 @@
   ```cmake
   include(FetchContent)
 
-  FetchContent_Declare(saucer-loop GIT_REPOSITORY "https://github.com/saucer/loop" GIT_TAG v1.0.0)
+  FetchContent_Declare(saucer-loop GIT_REPOSITORY "https://github.com/saucer/loop" GIT_TAG v2.0.0)
   FetchContent_MakeAvailable(saucer-loop)
   ```
 
@@ -40,17 +40,4 @@ target_link_libraries(<target> saucer::loop)
 > [!WARNING]
 > This module may replace the default application loop. Therefore, it is recommended to not use or call `application::finish()`!
 
-```cpp
-auto  app    = /*...*/;
-auto& loop   = app->add_module<saucer::modules::loop>();
-auto webview = /*...*/;
-
-while (/*cond*/)
-{
-    loop->iteration();
-}
-
-// or simply...
-
-loop->run();
-```
+For a usage example see the [loop-example](https://github.com/saucer/saucer/blob/master/examples/loop/main.cpp)
