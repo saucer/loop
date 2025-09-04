@@ -20,9 +20,7 @@ endif()
 # --------------------------------------------------------------------------------------------------------
 
 target_include_directories(${PROJECT_NAME} PUBLIC  "include")
-
 target_include_directories(${PROJECT_NAME} PRIVATE "private")
-target_include_directories(${PROJECT_NAME} PRIVATE "include/saucer/modules")
 
 # --------------------------------------------------------------------------------------------------------
 # Setup Dependencies

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "loop.hpp"
+#include <saucer/modules/loop.hpp>
 
 namespace saucer::modules
 {
