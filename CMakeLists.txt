@@ -31,7 +31,7 @@ include("cmake/cpm.cmake")
 if (PROJECT_IS_TOP_LEVEL)
   CPMAddPackage(
     NAME           saucer
-    GIT_TAG        ver/7.0.0
+    GIT_TAG        master
     GIT_REPOSITORY "https://github.com/saucer/saucer"
   )
 endif()
